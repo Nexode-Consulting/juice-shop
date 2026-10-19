@@ -111,7 +111,8 @@ router.post('/', (req: Request<Record<string, unknown>, Record<string, unknown>,
             if (!html || error) {
               next(new Error(error.message))
             } else {
-              const sendlfrResponse: string = html.slice(0, 100) + '......'
+              const escapedHtml = entities.escape(html);
+              const sendlfrResponse: string = escapedHtml.slice(0, 100) + '......'
               res.send(sendlfrResponse)
               challengeUtils.solveIf(challenges.lfrChallenge, () => { return true })
             }
